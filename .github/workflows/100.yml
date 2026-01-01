@@ -1,24 +1,19 @@
+name: Create 100MB File with Content
 
-name: Generate 100M File
 on: [push]
 jobs:
-  generate-file:
+  create-file:
     runs-on: ubuntu-latest
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
 
-    - name: Generate 100MB file
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Create 100MB file with content using head and tr (slow method)
       run: |
-        echo "" > 100M.txt
-        for i in {1..104857600}; do
-          echo "a" >> 100M.txt
-        done
-    - name: Upload file to repository
-      uses: actions/upload-artifact@v3
-      with:
-        name: 100M
-        path: 100M.txt
+        # 使用 head 和 tr 生成内容并写入文件（这种方法较慢，特别是对于大文件）
+        head -c 104857600 /dev/urandom | tr -dc 'A-Za-z' | head -c 104857600 > 100M.txt
+        echo "Large file created with content successfully."
 
     - name: Commit and push the file
       run: |
