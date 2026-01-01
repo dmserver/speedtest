@@ -1,0 +1,24 @@
+name: Create 50M File with Content
+
+on: [push]
+jobs:
+  create-file:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Create 50M file with content using head and tr (slow method)
+      run: |
+        # 使用 head 和 tr 生成内容并写入文件（这种方法较慢，特别是对于大文件）
+        head -c 52428800 /dev/urandom | tr -dc 'A-Za-z' | head -c 52428800 > 50M.txt
+        echo "Large file created with content successfully."
+
+    - name: Commit and push the file 50M
+      run: |
+        git config --local user.email "3407334353@qq.com"
+        git config --local user.name "dmserver"
+        git add 50M.txt
+        git commit -m "Add 50M file"
+        git push origin main
