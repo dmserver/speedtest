@@ -14,7 +14,7 @@ jobs:
       - name: Create 100M TXT file
         run: |
           echo "htmlhtmlhtmlhtml" > 100M.txt
-          for i in {1..6553600}; do
+          for i in {1..6553599}; do
             echo "htmlhtmlhtmlhtml" >> 100M.txt
           done
 
