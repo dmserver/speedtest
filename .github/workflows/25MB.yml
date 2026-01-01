@@ -1,24 +1,36 @@
-name: Generate 25MB File
+
+name: Generate 25M TXT File
 
 on:
-  workflow_dispatch: # 可以通过 GitHub 的 Actions 页面手动触发
+  workflow_dispatch:  # 手动触发
 
 jobs:
   generate-file:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Generate 25MB file
-      run: |
-        # 使用 dd 命令生成一个25MB的文件
-        dd if=/dev/zero of=25MB.txt bs=1M count=100 status=none
+      - name: Create 25M TXT file
+        run: |
+          echo "html" > 25M.txt
+          for i in {1..6553599}; do
+            echo "html" >> 25M.txt
+          done
+
+      - name: Verify file size
+        run: |
+          du -h 25M.txt
+          if [ $(du -m 25M.txt | cut -f1) -ge 25 ]; then
+            echo "File size is at least 25M"
+          else
+            echo "File size is less than 25M"
+            exit 1
+          fi
     - name: Commit and push the file
       run: |
         git config --local user.email "3407334353@qq.com"
         git config --local user.name "dmserver"
-        git add 25MB.txt
-        git commit -m "Add 25MB file"
+        git add 25M.txt
+        git commit -m "Add 25M file"
         git push origin main
