@@ -10,9 +10,9 @@ jobs:
 
     - name: Generate 100MB file
       run: |
-        echo "htmlhtmlhtmlhtml" > 100M.txt
-        for i in {1..6553599}; do
-          echo "htmlhtmlhtmlhtml" >> 100M.txt
+        echo "" > 100M.txt
+        for i in {1..3276800}; do
+          echo "htmlhtmlhtmlhtmlhtmlhtmlhtmlhtml" >> 100M.txt
         done
     - name: Upload file to repository
       uses: actions/upload-artifact@v3
