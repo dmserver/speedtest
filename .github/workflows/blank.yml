@@ -1,0 +1,28 @@
+name: Generate 100MB Text File
+
+on: [push]  # 触发条件，这里设置为每次push时触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # 使用最新的Ubuntu环境
+
+    steps:
+    - name: Checkout code  # 检出代码
+      uses: actions/checkout@v2
+      
+    - name: Set up Python  # 设置Python环境
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'  # 使用Python 3.x版本
+        
+    - name: Generate 100MB Text File  # 生成100MB的文本文件
+      run: |
+        python -c "with open('100MB.txt', 'w') as f: f.write('a' * (1024 * 1024 * 100))"  # 使用Python生成文件
+        ls -lh 100MB.txt  # 列出文件大小，确认是否正确生成
+        
+    - name: Commit and push if it changed  # 如果文件有变化，则提交并推送到仓库
+      run: |
+        git config user.name "GitHub Actions Bot"  # 设置提交者信息
+        git config user.email "ppx@qq.com"  # 设置提交者邮箱（替换为你的邮箱）
+        git add 100MB.txt  # 添加文件到Git仓库
+        git commit -m "Auto-generated 100MB
