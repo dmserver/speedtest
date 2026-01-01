@@ -15,7 +15,7 @@ jobs:
         head -c 52428800 /dev/urandom | tr -dc 'A-Za-z' | head -c 52428800 > 50M.txt
         echo "Large file created with content successfully."
 
-    - name: Commit and push the file 50M
+    - name: Commit and push the file
       run: |
         git config --local user.email "3407334353@qq.com"
         git config --local user.name "dmserver"
