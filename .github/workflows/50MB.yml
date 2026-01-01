@@ -11,7 +11,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Create 100M TXT file
+      - name: Create 50M TXT file
         run: |
           echo "htmlhtml" > 50M.txt
           for i in {1..6553599}; do
@@ -21,7 +21,7 @@ jobs:
       - name: Verify file size
         run: |
           du -h 50M.txt
-          if [ $(du -m 100M.txt | cut -f1) -ge 50 ]; then
+          if [ $(du -m 50M.txt | cut -f1) -ge 50 ]; then
             echo "File size is at least 50M"
           else
             echo "File size is less than 50M"
