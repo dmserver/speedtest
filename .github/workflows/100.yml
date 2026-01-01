@@ -1,0 +1,28 @@
+
+name: Generate 100M File
+on: [push]
+jobs:
+  generate-file:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Create 100M file
+      run: |
+        echo "htmlhtmlhtmlhtml" > 100M.txt
+        for i in {1..6553599}; do
+          echo "htmlhtmlhtmlhtml" >> 100M.txt
+        done
+    - name: Upload file to repository
+      uses: actions/upload-artifact@v3
+      with:
+        name: 100M
+        path: 100M.txt
+
+    - name: Commit and push the file
+      run: |
+        git config --local user.email "3407334353@qq.com"
+        git config --local user.name "dmserver"
+        git add 100M.txt
+        git commit -m "Add 100M file"
+        git push origin main
