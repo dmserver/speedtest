@@ -1,24 +1,36 @@
-name: Generate 50MB File
+
+name: Generate 50M TXT File
 
 on:
-  workflow_dispatch: # 可以通过 GitHub 的 Actions 页面手动触发
+  workflow_dispatch:  # 手动触发
 
 jobs:
   generate-file:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Generate 50MB file
-      run: |
-        # 使用 dd 命令生成一个50MB的文件
-        dd if=/dev/zero of=50MB.txt bs=1M count=100 status=none
+      - name: Create 100M TXT file
+        run: |
+          echo "htmlhtml" > 50M.txt
+          for i in {1..6553599}; do
+            echo "htmlhtml" >> 50M.txt
+          done
+
+      - name: Verify file size
+        run: |
+          du -h 50M.txt
+          if [ $(du -m 100M.txt | cut -f1) -ge 50 ]; then
+            echo "File size is at least 50M"
+          else
+            echo "File size is less than 50M"
+            exit 1
+          fi
     - name: Commit and push the file
       run: |
         git config --local user.email "3407334353@qq.com"
         git config --local user.name "dmserver"
-        git add 50MB.txt
-        git commit -m "Add 50MB file"
+        git add 50M.txt
+        git commit -m "Add 50M file"
         git push origin main
